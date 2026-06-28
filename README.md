@@ -6,9 +6,15 @@
 
 **A tiny, dependency-free engine for iterative refinement loops: propose → check → revise → repeat.**
 
-A lot of useful work has the same shape. Produce a candidate, check it against a goal, and use what the check told you to produce a better candidate — repeating until it's good enough, it stops improving, or you run out of budget. Numeric solvers, optimizers, retry-with-feedback agent loops, and self-correcting generators are all *this loop*.
+Ask yourself:
 
-`cyclework` makes that loop a first-class, inspectable object instead of a `while` buried in a function. You supply two functions — how to **check** a candidate and how to **revise** it given feedback — and the engine runs the cycle, detects convergence and plateaus, enforces a budget, captures errors, and hands back a full trace of what happened at every step.
+- Is your agent's "keep trying until it's right" logic a **`while` loop nobody can inspect** afterward?
+- When a refinement loop stops, can you tell whether it **solved**, **gave up**, or just **stopped improving** — and see every step it took?
+- Are you re-implementing the same propose → check → revise scaffolding in every project?
+
+A lot of useful work has that one shape: produce a candidate, check it against a goal, use the feedback to produce a better one — until it's good enough, it stops improving, or you run out of budget. Solvers, optimizers, retry-with-feedback agent loops, and self-correcting generators are all *this loop*.
+
+`cyclework` makes it a first-class, inspectable object instead of a `while` buried in a function. You supply two functions — how to **check** a candidate and how to **revise** it given feedback — and the engine runs the cycle, detects convergence and plateaus, enforces a budget, captures errors, and hands back a full trace.
 
 - **Domain-agnostic.** The candidate ("state") can be a number, a string, a dict, an AST — anything.
 - **Inspectable.** Every iteration is recorded; you get the answer *and* the path to it.
