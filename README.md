@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/cognis-digital/cyclework/actions/workflows/ci.yml/badge.svg)](https://github.com/cognis-digital/cyclework/actions/workflows/ci.yml)
 
+> Part of the **[Accountable AI Engineering suite](https://github.com/cognis-digital/accountable-ai-suite)** — provable governance for AI agents on infrastructure you own.
+
 **A tiny, dependency-free engine for iterative refinement loops: propose → check → revise → repeat.**
 
 A lot of useful work has the same shape. Produce a candidate, check it against a goal, and use what the check told you to produce a better candidate — repeating until it's good enough, it stops improving, or you run out of budget. Numeric solvers, optimizers, retry-with-feedback agent loops, and self-correcting generators are all *this loop*.
