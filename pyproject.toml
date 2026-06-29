@@ -8,12 +8,11 @@ version = "0.1.0"
 description = "A tiny, dependency-free engine for iterative refinement loops: propose, check, revise, repeat."
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "Apache-2.0" }
+license = {file = "LICENSE"}
 authors = [{ name = "Cognis Digital" }]
 keywords = ["iteration", "refinement", "convergence", "optimization", "agent-loop", "control-loop"]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: Apache Software License",
   "Topic :: Scientific/Engineering",
 ]
 dependencies = []
