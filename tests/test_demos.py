@@ -21,6 +21,21 @@ SCENARIOS = [
     "03_plateau_and_budget",
     "04_feedback_refiner",
     "05_streaming_observability",
+    "06_error_recovery",
+    "07_gradient_descent",
+    "08_text_normalizer",
+    "09_misuse_guards",
+    "10_collatz_and_budget",
+    "11_seed_preprocessing",
+    "12_plateau_early_stop",
+    "13_streaming_audit_log",
+    "14_state_is_anything",
+    "15_retry_with_backoff",
+    "16_constraint_repair",
+    "17_best_of_nonconvergent",
+    "18_iterative_summarizer",
+    "19_two_forms_compared",
+    "20_newton_vs_bisection",
 ]
 
 

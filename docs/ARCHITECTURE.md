@@ -69,8 +69,14 @@ It exposes two forms of the same loop:
 - **`cycle(initial)`** — a generator that yields each `Iteration` as it happens,
   so the caller can stream, throttle, or stop early from the outside.
 
-A stage (`check` or `revise`) that raises does not crash the caller: the run
-aborts cleanly with `Status.ERROR` and the trace collected so far.
+A stage (`seed`, `check`, or `revise`) that raises does not crash the caller:
+the run aborts cleanly with `Status.ERROR`, a message naming the stage and
+iteration, and the trace collected so far. A `check` that returns something
+other than a `Verdict` is treated the same way — surfaced as a clear `TypeError`
+(named ERROR in `run()`, raised directly in `cycle()`) rather than a cryptic
+`AttributeError` deep inside the loop. Constructor arguments are validated up
+front: non-callable stages raise `TypeError`, and out-of-range numeric knobs
+(`max_iterations < 0`, `patience < 1`, `min_delta < 0`) raise `ValueError`.
 
 ### `Iteration` and `Result` (`cyclework/trace.py`)
 The inspectable history. Every step is an `Iteration` (its `index`, the
@@ -114,7 +120,8 @@ loop a first-class object is that you can tell them apart:
 - **`SOLVED`** — a verdict came back `ok=True`.
 - **`PLATEAU`** — the score stopped improving (patience exhausted).
 - **`EXHAUSTED`** — `max_iterations` reached without solving.
-- **`ERROR`** — a stage raised; the run aborted with the trace so far.
+- **`ERROR`** — a stage (`seed`/`check`/`revise`) raised, or `check` returned a
+  non-`Verdict`; the run aborted with a stage-named message and the trace so far.
 
 ### `examples` (`cyclework/examples.py`)
 Worked uses of the engine, each exercised by the tests: `sqrt_newton` (a numeric

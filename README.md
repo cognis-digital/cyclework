@@ -14,7 +14,7 @@ Ask yourself:
 
 A lot of useful work has that one shape: produce a candidate, check it against a goal, use the feedback to produce a better one — until it's good enough, it stops improving, or you run out of budget. Solvers, optimizers, retry-with-feedback agent loops, and self-correcting generators are all *this loop*.
 
-`cyclework` makes it a first-class, inspectable object instead of a `while` buried in a function. You supply two functions — how to **check** a candidate and how to **revise** it given feedback — and the engine runs the cycle, detects convergence and plateaus, enforces a budget, captures errors, and hands back a full trace.
+`cyclework` makes it a first-class, inspectable object instead of a `while` buried in a function. You supply two functions — how to **check** a candidate and how to **revise** it given feedback — and the engine runs the cycle, detects convergence and plateaus, enforces a budget, captures errors (including in the optional `seed`), validates its own configuration, and hands back a full trace.
 
 - **Domain-agnostic.** The candidate ("state") can be a number, a string, a dict, an AST — anything.
 - **Inspectable.** Every iteration is recorded; you get the answer *and* the path to it.
@@ -108,7 +108,7 @@ model, stopping conditions, and why the loop is a first-class object).
 - **Solved** — a verdict comes back `ok=True`.
 - **Plateau** — with `patience=N` set, the score fails to improve by at least `min_delta` for `N` consecutive checks. (Higher-is-better; negate a cost to minimize it.)
 - **Exhausted** — `max_iterations` reached without solving.
-- **Error** — a `check`/`revise` raised; the run aborts cleanly with the trace so far.
+- **Error** — a `check`, `revise`, or `seed` raised (or `check` returned something other than a `Verdict`); the run aborts cleanly with a message naming the stage and iteration, and the trace + best candidate captured so far.
 
 ### Observability
 
@@ -120,12 +120,12 @@ Engine(check, revise, on_iteration=lambda it: print(it.index, it.score))
 
 ## Demos
 
-Five runnable, narrated scenarios in [`demos/`](demos/), each for a different
-audience — all driving the real API, no network, exit 0. Full descriptions in
-[`docs/DEMOS.md`](docs/DEMOS.md).
+Twenty runnable, narrated scenarios in [`demos/`](demos/), each for a different
+audience or facet of the engine — all driving the real API, no network, exit 0.
+Full descriptions in [`docs/DEMOS.md`](docs/DEMOS.md).
 
 ```bash
-python demos/run_all.py               # all five, end to end
+python demos/run_all.py               # all twenty, end to end
 python demos/02_numeric_solvers.py    # or just one
 ```
 
@@ -136,6 +136,7 @@ python demos/02_numeric_solvers.py    # or just one
 | 3 | [`03_plateau_and_budget.py`](demos/03_plateau_and_budget.py) | Production loop owners | Honest stopping: SOLVED / PLATEAU / EXHAUSTED / ERROR, always keeping the best candidate. |
 | 4 | [`04_feedback_refiner.py`](demos/04_feedback_refiner.py) | Pipeline engineers | Feedback-driven revision: the verdict names the fix, revise applies exactly it. |
 | 5 | [`05_streaming_observability.py`](demos/05_streaming_observability.py) | Observability engineers | Watching a loop live via `on_iteration` and the `Engine.cycle()` generator. |
+| 6–20 | [see `docs/DEMOS.md`](docs/DEMOS.md) | resilience, ML, data-cleaning, compliance, reliability, numerical … | Error recovery, gradient descent, constraint repair, retry-with-backoff, audit logging, best-of non-convergent search, Newton vs bisection, and more. |
 
 On a cp1252 (Windows) console, prefix with `PYTHONUTF8=1`.
 
@@ -143,7 +144,7 @@ On a cp1252 (Windows) console, prefix with `PYTHONUTF8=1`.
 
 ```bash
 pip install -e ".[dev]"
-pytest -q          # 24 tests (engine, examples, and demo smoke tests)
+pytest -q          # 136 tests (engine, data model, examples, and demo smoke tests)
 ```
 
 ## License
