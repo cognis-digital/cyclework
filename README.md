@@ -21,6 +21,15 @@ A lot of useful work has that one shape: produce a candidate, check it against a
 - **Honest stopping.** Solved, plateaued, or exhausted — the result tells you which, with the best candidate it saw.
 - **Zero dependencies.** Pure Python standard library, ~150 lines of engine.
 
+
+## Watch the walkthrough
+
+A full narrated tour — setup, the tool in action, and every demo scenario:
+
+[![Watch the cyclework walkthrough](media/walkthrough-thumb.png)](https://github.com/cognis-digital/cyclework/releases/download/walkthrough-v1/walkthrough.mp4)
+
+▶ **[Watch the walkthrough (MP4)](https://github.com/cognis-digital/cyclework/releases/download/walkthrough-v1/walkthrough.mp4)**
+
 ## Install
 
 ```bash
